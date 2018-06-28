@@ -16,7 +16,7 @@
       </a>
       <h1>用户注册</h1>
     </div>
-    <form id="signup_form">
+    <form id="signup_form" method="post">
       <div class="form-group">
         <label for="email">邮箱</label>
         <input type="email" class="form-control" id="email" name="email" placeholder="Email" autofocus>
@@ -32,7 +32,12 @@
       <button type="submit" class="btn btn-success btn-block">注册</button>
     </form>
     <div class="message">
-      <p>已有账号? <a href="/login">点击登录</a>.</p>
+      <p>已有账号? <a href="/signin">点击登录</a>.</p>
+      {{if (msg)}}
+        <div style="color:red">
+          {{msg}}
+        </div>
+      {{/if}}
     </div>
   </div>
   <script src="/node_modules/jquery/dist/jquery.js"></script>
