@@ -20,6 +20,7 @@ router
 router
     .get('/topic/create', topicCtrl.showTopic)
     .post('/topic/create',topicCtrl.handleCreate)
+    // 动态路由,可以传递参数
     .get('/topic/:topicID',topicCtrl.showTopicID)
     .get('/topic/:topicID/edit',topicCtrl.showEdit)
     .post('/topic/:topicID/edit',topicCtrl.handleEdit)
