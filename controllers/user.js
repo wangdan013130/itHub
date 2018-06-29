@@ -6,7 +6,36 @@ exports.showSignin = (req,res)=> {
 };
 // 处理登录逻辑
 exports.handleSignin = (req,res)=> {
-    res.send('handleSignin');
+    // res.send('handleSignin');
+    // 验证用户的输入
+    // 验证邮箱和密码是否正确
+    db.query(
+        'select * from `users` where email = ?',
+        req.body.email,
+        (err,results)=> {
+            if (err) {
+                return res.send('服务器内部出错');
+            }
+            if(results.length <= 0) {
+                res.render('signin.html', {
+                    code : 401,
+                    msg : '邮箱不存在'
+                });
+            }
+            const password = md5(req.body.password);
+            if (password != results[0].password) {
+                res.render('signin.html', {
+                    code : 401,
+                    msg : '密码不存在'
+                });
+            }
+            res.render('signin.html',{
+                code : 400,
+                msg : '登录成功'
+                
+            })
+        }
+    )
 };
 
 exports.showSignup = (req,res)=> {
