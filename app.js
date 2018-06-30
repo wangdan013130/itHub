@@ -3,14 +3,15 @@ const router = require('./router/router');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session)
+const config = require('./config');
 
-
+const db = config.database;
 const options = {
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: 'root',
-    database: 'ithub'
+    host: db.host,
+    port: db.port,
+    user: db.user,
+    password: db.password,
+    database: db.database
 }
 const sessionStore = new MySQLStore(options);
 
@@ -18,8 +19,8 @@ const app = express();
 
 const port = 3000;
 // 监听端口
-app.listen(port, ()=> {
-    console.log('监听3000端口');
+app.listen(config.database.port, ()=> {
+    console.log('config.database.port');
 })
 
 // 统一静态资源     

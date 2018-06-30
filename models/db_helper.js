@@ -1,9 +1,12 @@
 const mysql = require('mysql');
+const db = require('../config');
+const db = db.database;
+
 const pool  = mysql.createPool({
   connectionLimit : 10,
-  host            : '127.0.0.1',
-  user            : 'root',
-  password        : 'root',
-  database        : 'ithub'
+  host            : db.host,
+  user            : db.user,
+  password        : db.password,
+  database        : db.database
 });
 module.exports = pool;
