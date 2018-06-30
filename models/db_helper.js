@@ -1,6 +1,6 @@
 const mysql = require('mysql');
-const db = require('../config');
-const db = db.database;
+const config = require('../config');
+const db = config.database;
 
 const pool  = mysql.createPool({
   connectionLimit : 10,

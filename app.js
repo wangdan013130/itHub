@@ -19,8 +19,8 @@ const app = express();
 
 const port = 3000;
 // 监听端口
-app.listen(config.database.port, ()=> {
-    console.log('config.database.port');
+app.listen(config.port, ()=> {
+    console.log('config.port');
 })
 
 // 统一静态资源     
