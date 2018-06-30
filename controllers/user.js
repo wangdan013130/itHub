@@ -8,32 +8,35 @@ exports.showSignin = (req,res)=> {
 exports.handleSignin = (req,res)=> {
     // res.send('handleSignin');
     // 验证用户的输入
-    // 验证邮箱和密码是否正确
-    userModel.getByEmail(req.body.email,(err,user)=> {
+    // 验证邮箱是否正确
+   userModel.getByEmail(req.body.email,(err,user)=>{
         if (err) {
             return res.send('服务器内部出错');
         }
         if (!user) {
-            // 若是不存在,返回错误状态码, 以 json 形式
             return res.json({
-                code : 201,
-                msg : '邮箱不存在,请检查输入或者注册新用户'
-            })
+                code : 401,
+                msg : '邮箱不存在,请检查后输入或者注册'
+            });
         }
-        // 验证昵称
+        // 判断密码是否正确
         const password = md5(req.body.password);
-        if (password == user.password ) {
-            res,json({
+        if (password == user.password) {
+            // 记录 session
+            delete user.password;
+            req.session.user = user;
+            res.json({
                 code : 200,
-                msg : '登陆成功'
+                msg : '登录成功'
             })
         } else {
             res.json({
-                code : 402,
-                msg : '密码输入错误'
+                code : 403,
+                msg : '密码错误,请重新输入'
             });
         }
-    });
+
+   });
 };
 
 exports.showSignup = (req,res)=> {
@@ -70,10 +73,15 @@ exports.handleSignup = (req,res)=> {
             // 获取到时间与加密后的密码
             req.body.createdAt = new Date();
             req.body.password = md5(req.body.password);
-            userModel.createUser(req.body,(err,isOK)=> {
+            userModel.createUser(req.body,(err,isOk)=> {
+               if (err) {
+                   return res.send('服务器内部出错');
+               }
                 if (isOk) {
+                   
                     res.redirect('/signin');
                 } else {
+                   
                     res.render('signup.html', {
                         msg : '注册失败'
                     });
@@ -83,7 +91,10 @@ exports.handleSignup = (req,res)=> {
     });
 };
 exports.handleSignout = (req,res)=> {
-    res.send('handleSignout');
+    // res.send('handleSignout');
+    delete req.session.user;
+    // res.redirect('/signin');
+    res.redirect('/signin');
 };
 
 

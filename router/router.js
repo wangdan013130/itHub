@@ -15,7 +15,7 @@ router
     .post('/signin',userCtrl.handleSignin)
     .get('/signup',userCtrl.showSignup)
     .post('/signup',userCtrl.handleSignup)
-    .post('/signout',userCtrl.handleSignout);
+    .get('/signout',userCtrl.handleSignout);
 
 router
     .get('/topic/create', topicCtrl.showTopic)
