@@ -69,4 +69,21 @@ exports.updatdTopic = (topic,callback)=> {
             }
         }
     )
-}
+};
+
+// 查询所有数据
+exports.getAll = (callback)=> {
+    db.query(
+        'select topics.id ,topics.title,nickname,topics.createdAt from `topics` join `users` on userId = users.id',
+        (err,results)=> {
+            if (err) {
+                return callback(err);
+            }
+            callback(null,results);
+        }
+    );
+    
+};
+
+
+  

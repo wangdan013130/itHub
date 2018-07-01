@@ -40,8 +40,10 @@ exports.handleCreate = (req,res)=> {
         }
     });
 };
-exports.showTopicID = (req,res)=> {
-    res.send('showTopicID');
+exports.showTopic = (req,res)=> {
+    // 通过查询字符串传参
+    // res.send('showTopicID');
+    console.log(req.query);
 };
 exports.showEdit = (req,res)=> {
     res.send('showEdit');
