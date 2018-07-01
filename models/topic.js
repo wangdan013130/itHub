@@ -33,10 +33,10 @@ exports.getById= (id,callback)=> {
             }
         }
     )
-}
+};
 
 // 删除文章
-exports.deleteTopic = (id, callback)=> {
+exports.delete = (id, callback)=> {
     db.query(
         'delete from `topics` where `id` =?',
         id,
@@ -50,8 +50,8 @@ exports.deleteTopic = (id, callback)=> {
                 callback(null, false);
             }
         }
-    )
-}
+    );
+};
 
 // 修改文章
 exports.updatdTopic = (topic,callback)=> {
@@ -74,7 +74,7 @@ exports.updatdTopic = (topic,callback)=> {
 // 查询所有数据
 exports.getAll = (callback)=> {
     db.query(
-        'select topics.id ,topics.title,nickname,topics.createdAt from `topics` join `users` on userId = users.id',
+        'select topics.id ,topics.title,nickname,topics.createdAt from `topics` join `users` on userId = users.id order by createdAt desc',
         (err,results)=> {
             if (err) {
                 return callback(err);

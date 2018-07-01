@@ -18,10 +18,11 @@ router
     .get('/signout',userCtrl.handleSignout);
 
 router
-    .get('/topic/create', topicCtrl.showTopic)
+    .get('/topic/create', topicCtrl.showCreate)
     .post('/topic/create',topicCtrl.handleCreate)
     // 动态路由,可以传递参数
+    // .get('/topic/show', topicCtrl.showTopic)
     .get('/topic/:topicID',topicCtrl.showTopic)
     .get('/topic/:topicID/edit',topicCtrl.showEdit)
     .post('/topic/:topicID/edit',topicCtrl.handleEdit)
-    .post('/topic/:topicID/delete',topicCtrl.handleDelete);
+    .get('/topic/:topicID/delete',topicCtrl.handleDelete);
