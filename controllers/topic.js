@@ -68,7 +68,7 @@ exports.showEdit = (req,res)=> {
 // 先获取所有一级分类模板
 // 再获取当前 ID
 // 根据 当前 id 将修改后值传入
-
+    // res.render('topic/edit.html');
     categoryModel.getAll((err,categories)=> {
         const id = req.params.topicID;
         if (isNaN(id)) {
@@ -80,7 +80,9 @@ exports.showEdit = (req,res)=> {
             }
             if (topic) {
                 res.render('topic/edit.html', {
-                    topic
+                    categories,
+                    topic,
+                    user : req.session.user
                 })
             }else {
                 res.redner('没有查询到数据');
@@ -88,9 +90,35 @@ exports.showEdit = (req,res)=> {
         });
     });
 };
+
+
 exports.handleEdit = (req,res)=> {
-    res.send('handleEdit');
+    // res.send('handleEdit');
+    // ajax 请求,  返回json数据
+    const id = req.params.topicID;
+    req.body.id = id;
+    topicModel.update(req.body,(err,isOk)=> {
+        if (err) {
+            return res.json({
+                code : 500,
+                msg : '服务器内部出错'
+            })
+        }
+        if(isOk) {
+            res.json({
+                code : 200,
+                msg : '修改成功'
+            })
+        } else {
+            res.json({
+                code : 201,
+                msg : '修改失败'
+            });
+        }
+    })
 };
+
+
 exports.handleDelete = (req,res)=> {
    //res.send('handleDelete');
    const id = req.params.topicID;

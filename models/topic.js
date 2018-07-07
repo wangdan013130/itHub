@@ -54,22 +54,23 @@ exports.delete = (id, callback)=> {
 };
 
 // 修改文章
-exports.updatdTopic = (topic,callback)=> {
+exports.update = (topic, callback) => {
     db.query(
-        'update `topics` set `title=`?`, content=`?, `categoryId=`?  where `id`=?',
-        topic,
-        (err,results)=> {
-            if (err) {
-                return callback(err);
-            }
-            if (results.affectedRows > 0) {
-                callback(null, true);
-            } else {
-                callback(null, false);
-            }
+      'update `topics` set `title`=?, `content`=?, `categoryId`=? where id=?',
+      [topic.title, topic.content, topic.categoryId, topic.id],
+      (err, results) => {
+        if (err) {
+          return callback(err);
         }
-    )
-};
+        if (results.affectedRows > 0) {
+          // 更新成功
+          callback(null, true);
+        } else {
+          callback(null, false);
+        }
+      }
+    );
+  };
 
 // 查询所有数据
 exports.getAll = (callback)=> {
